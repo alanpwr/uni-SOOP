@@ -1,0 +1,208 @@
+package lab5; 
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Lab5 {
+
+	public static void main(String[] args) {
+		
+		/*
+		 * TASK 1
+		 */
+		int[] testArray = {12, 433, 340, 12340, 5430, -123, -134, 5};
+		
+		// Factorial
+		System.out.println("Factorial:");
+		System.out.println(factorialIteration(4));
+		System.out.println(factorialRecursion(4) + "\n");
+		
+		// GCD
+		System.out.println("GCD:");
+		System.out.println(gcdIteration(15, 90));
+		System.out.println(gcdRecursion(15, 90) + "\n");
+		
+		// Number of values in array that are > 0
+		System.out.println("Array Length:");
+		System.out.println(arrayNumIteration(testArray));
+		System.out.println(arrayNumRecursion(testArray, testArray.length - 1) + "\n"); // -1 because arrays start at 0
+		
+		// Sum of values in array that are > 0
+		System.out.println("Array Sum:");
+		System.out.println(arraySumIteration(testArray));
+		System.out.println(arraySumRecursion(testArray, testArray.length - 1) + "\n"); // Similar to above
+		
+		/*
+		 * TASK 2
+		 */
+		int[] testArray2 = {55, 12, 643, 134, -346, 4, 90, -555};
+		
+		// Create list from array
+		List<Integer> testingList = createList(testArray2);
+		
+		// Sum of list
+		System.out.println("List Sum:");
+		System.out.println(listSumIteration(testingList));
+		System.out.println(listSumRecursion(testingList, testingList.size() - 1));
+	}
+	
+	public static int factorialIteration(int number) {
+		// Disallow negative numbers
+		if (number < 0) {
+			// Waste no time and terminate the program
+			System.out.println("Can't accept negative numbers.");
+			System.exit(1);
+		}
+		// Start with 1 because it's the smallest possible result
+		int result = 1;
+		// Multiply the result starting from the top, i determines where we are
+		for (int i = 0; i < number; i++) {
+			result *= number - i;
+		}
+		return result;
+	}
+	
+	public static int factorialRecursion(int number) {
+		// No negative numbers
+		if (number < 0) {
+			System.err.println("Can't accept negative numbers.");
+			System.exit(1);
+		// The smallest result possible, the end of recursion
+		} else if (number == 0) {
+			return 1;
+		}
+		// The recursive line
+		int result = number * factorialRecursion(number - 1);
+		return result;
+	}
+
+	public static int gcdIteration(int number1, int number2) {
+		// Start from 1 because you can't divide by zero, and keep
+		// going up until i reaches the smaller number of two and stop
+		// because either of those statement in the loop would be broken
+		// by that point it would have found the GCD number.
+		int gcdNumber = 0;
+		for(int i = 1; i <= number1 && i <= number2; i++) {
+			if(number1 % i == 0 && number2 % i == 0) {
+				gcdNumber = i;
+			}
+		}
+		return gcdNumber;
+	}
+	
+	public static int gcdRecursion(int number1, int number2) {
+		// Euclidean algorithm
+		if (number2 == 0) {
+			return number1;
+		}
+		return gcdRecursion(number1, number1 % number2);
+	}
+	
+	public static int arrayNumIteration(int[] inputArr) {
+		int result = 0;
+		for (int i = 0; i < inputArr.length; i++) {
+			if (inputArr[i] > 0) {
+				result++;
+			}
+		}
+		return result;
+	}
+	
+	public static int arrayNumRecursion(int[] inputArr, int len) {
+		// At the last element
+		if (len <= 0) {
+			// if last element is bigger than 0
+			if (inputArr[len] > 0) {
+				return 1;
+			// otherwise no
+			} else {
+				return 0;
+			}
+		} else {
+			// The recursion happens here
+			// check if number is bigger than 0
+			if (inputArr[len] > 0) {
+				// add 1 and run again
+				return 1 + arrayNumRecursion(inputArr, len-1);
+			} else {
+				// run again but don't add 1 if smaller than zero
+				return arrayNumRecursion(inputArr, len-1);
+			}
+		}
+	}
+	
+	public static int arraySumIteration(int[] inputArr) {
+		int result = 0;
+		for (int i = 0; i < inputArr.length; i++) {
+			if (inputArr[i] > 0) {
+				result += inputArr[i];
+			}
+		}
+		return result;
+	}
+	
+	public static int arraySumRecursion(int[] inputArr, int len) {
+		// At the last element
+		if (len <= 0) {
+			// Check bigger than 0
+			if (inputArr[len] > 0) {
+				// Add the last element and finish
+				return inputArr[len];
+			} else {
+				// Add nothing and finish
+				return 0;
+			}
+		} else {
+			// Check bigger than 0
+			if (inputArr[len] > 0) {
+				// Add the value and continue recursion
+				return inputArr[len] + arraySumRecursion(inputArr, len-1);
+			} else {
+				// Continue recursion with latest value
+				return arraySumRecursion(inputArr, len-1);
+			}
+		}
+	}
+
+	public static List<Integer> createList(int[] inputArray) {
+		List<Integer> tempList = new ArrayList<Integer>();
+		for (int i = 0; i < inputArray.length; i++) {
+			tempList.add(inputArray[i]);
+		}
+		return tempList;
+	}
+	
+	public static int listSumIteration(List<Integer> inputList) {
+		int result = 0;
+		for (int i = 0; i < inputList.size(); i++) {
+			if (inputList.get(i) > 0) {
+				result += inputList.get(i);
+			}
+		}
+		return result;
+	}
+	
+	public static int listSumRecursion(List<Integer> inputList, int len) {
+		// At the last element
+		if (len <= 0) {
+			// Check bigger than 0
+			if (inputList.get(len) > 0) {
+				// Add the last element and finish
+				return inputList.get(len);
+			} else {
+				// Add nothing and finish
+				return 0;
+			}
+		} else {
+			// Check bigger than 0
+			if (inputList.get(len) > 0) {
+				// Add the value and continue recursion
+				return inputList.get(len) + listSumRecursion(inputList, len-1);
+			} else {
+				// Continue recursion with latest value
+				return listSumRecursion(inputList, len-1);
+			}
+		}
+	}
+	
+}

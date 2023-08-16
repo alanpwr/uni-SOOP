@@ -1,0 +1,88 @@
+import java.util.Scanner;
+public class delirme{
+	public static void printArray(int[] arr, int no) {
+		if(arr==null || arr.length<=0)
+		{
+			System.out.println("No data to print");
+			return;
+		}
+		
+		for(int x=0; x<arr.length; x++ )
+		{
+			if(x == no)
+			{
+				System.out.println(" ");
+				no*=2;
+			}
+		System.out.print(arr[x] + " ");
+		}
+		System.out.println(" ");
+	}
+	public static boolean isAssending(int [] arr) {
+		
+		return true;
+	}
+public static int[] createArray(int size) {
+	int[] array = new int[size];
+	for(int a=0, k=11; a<array.length; a++, k+=2)
+	{
+		array[a] = k;
+	}
+	return array;
+	}
+public static double findAvarage(int [] inArr) {
+	if(inArr == null) {
+		System.out.println("find avarage:  empty array");
+		return 0;
+	}		
+	int sum=0, quantity = 0;
+	for (int c = 0; c<inArr.length; c++) {
+		sum += inArr[c];
+		quantity++;
+	}
+	if (quantity>0) return (double)	sum/quantity;
+	else return 0;
+}
+
+public static int[] selectGreaterThan(int [] inArr, int limit) {
+if(inArr==null)
+{
+	System.err.println("selectGraterThan: empty array");
+	return null;
+}
+int length = 0;
+for(int x=0; x<inArr.length; x++)
+{
+	if(inArr[x]>limit) length++;
+}
+int[] array = new int[length];
+	for(int x=0, k=0; x<inArr.length; x++)
+	{
+		if(inArr[x]>limit)
+		{
+			array[k]=inArr[x];
+			k++;
+		}
+	}
+	return array;
+}
+    public static void main(String[] args) {
+	int[] testArray= {7,12,1,0,5,8};
+	int[] emptyArray= {};
+	int[] anotherArray;
+	printArray(testArray, 3);
+	printArray(emptyArray, 3);
+	printArray(null,3);
+	anotherArray=createArray(8);
+	printArray(anotherArray, 4);
+	System.out.println("test avarage: " + findAvarage(testArray));
+	System.out.println("empty avarage: " + findAvarage(emptyArray));
+	anotherArray=selectGreaterThan(testArray, 7);
+	System.out.println(">7:  ");
+	printArray(anotherArray, 5);
+	anotherArray=selectGreaterThan(testArray, 77);
+	System.out.println(">77:  ");
+	printArray(anotherArray, 5);
+}
+	
+}
